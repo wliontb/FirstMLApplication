@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sentiment Analysis</title>
+  <link href="./css/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+  <div class="container mx-auto max-w-2xl bg-white rounded-lg shadow-lg p-6">
+    <h1 class="text-2xl font-bold mb-4">Sentiment Analysis</h1>
+
+    <!-- Tabs -->
+    <div class="flex mb-4">
+      <button id="tab-training" class="tab-button active" onclick="showTab('training')">Training</button>
+      <button id="tab-analyze" class="tab-button" onclick="showTab('analyze')">Analyze</button>
+      <button id="tab-convert" class="tab-button active" onclick="showTab('convert')">Convert Dataset</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="tab-content">
+      <!-- Training Tab -->
+      <div id="training" class="tab-content hidden">
+        <h2 class="text-xl font-semibold mb-2">Train the Model</h2>
+        <button onclick="trainModel()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Train Model</button>
+        <p id="training-status" class="mt-2"></p>
+        <p>Training content here.</p>
+      </div>
+
+      <!-- Analyze Tab -->
+      <div id="analyze" class="tab-content hidden">
+        <h2 class="text-xl font-semibold mb-2">Analyze Sentiment</h2>
+        <textarea id="review" rows="5" class="w-full border border-gray-300 p-2 rounded-md resize-none" placeholder="Enter your review here..."></textarea><br>
+        <button onclick="analyzeReview()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md mt-2">Analyze</button>
+        <p class="mt-2">Sentiment: <span id="sentiment"></span></p>
+      </div>
+
+      <!-- Convert Dataset Tab -->
+      <div id="convert" class="tab-content">
+        <h2 class="text-xl font-semibold mb-2">Convert CSV to JSON</h2>
+        <input type="file" id="csvFile" accept=".csv" class="mb-2">
+        <button onclick="uploadCSV()" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md">Upload CSV</button>
+        <p id="convert-status" class="mt-2"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/script.js"></script>
+  <script>
+    function showTab(tabName) {
+      // Ẩn tất cả các tab content
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => content.classList.add('hidden'));
+
+      // Hiển thị tab content được chọn
+      document.getElementById(tabName).classList.remove('hidden');
+
+      // Đổi class active cho tab button
+      const tabButtons = document.querySelectorAll('.tab-button');
+      tabButtons.forEach(button => button.classList.remove('active'));
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+    }
+
+    // Hàm analyzeReview() sẽ được định nghĩa trong server.js và gọi qua fetch
+    showTab('convert');
+  </script>
+  <style>
+    .tab-button {
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      border-radius: 5px 5px 0 0;
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+
+    .tab-button.active {
+      background-color: #fff;
+      border-bottom: 1px solid #fff;
+    }
+
+    .tab-content {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 0 0 5px 5px;
+    }
+  </style>
+</body>
+</html>

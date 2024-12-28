@@ -1,0 +1,38 @@
+[
+    {
+        "input": "This movie was great! I really enjoyed it.",
+        "output": "positive"
+    },
+    {
+        "input": "I loved the film. The acting was amazing.",
+        "output": "positive"
+    },
+    {
+        "input": "What a fantastic movie! Highly recommend.",
+        "output": "positive"
+    },
+    {
+        "input": "The movie was terrible. I hated it.",
+        "output": "negative"
+    },
+    {
+        "input": "I did not like the film. It was boring.",
+        "output": "negative"
+    },
+    {
+        "input": "Awful movie. Waste of time.",
+        "output": "negative"
+    },
+    {
+        "input": "The movie was okay. Not great, not terrible.",
+        "output": "neutral"
+    },
+    {
+        "input": "It was an average film. Nothing special.",
+        "output": "neutral"
+    },
+    {
+        "input": "The movie was neither good nor bad.",
+        "output": "neutral"
+    }
+]
