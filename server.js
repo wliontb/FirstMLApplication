@@ -1,18 +1,18 @@
 const express = require('express');
 const brain = require('brain.js');
-const fs = require('fs'); // Thêm module fs
+const fs = require('fs');
 const csv = require('csv-parser');
-const multer = require('multer'); // Thêm multer
+const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Thư mục lưu file upload
 // const data = require('./data.json'); // Dữ liệu huấn luyện
 
 const app = express();
 const port = 3000;
 
-// Serve static files from the "public" directory
+
 app.use(express.static('public'));
 
-// Middleware để parse dữ liệu JSON từ request body
+
 app.use(express.json());
 
 // Endpoint để phân loại
@@ -57,6 +57,19 @@ function trainModel() {
     console.log("Đã train xong mô hình và lưu vào model.json");
 }
 
+function extractLastKeyword(line) {
+    const targetWords = ['neutral', 'positive', 'negative'];
+    
+    
+    for (const target of targetWords) {
+        if (line.includes(target)) {
+            return target;
+        }
+    }
+    return null;
+}
+
+
 app.post('/analyze', (req, res) => {
     if (!modelLoaded) {
         return res.status(500).json({ error: 'Model is not loaded yet.' });
@@ -69,17 +82,17 @@ app.post('/analyze', (req, res) => {
     }
 
     const result = net.run(processedReview);
-    console.log(result);
-    let sentiment;
-    if (result.positive > 0.6) {
-        sentiment = "positive"
-    } else if (result.negative > 0.6) {
-        sentiment = "negative"
-    } else {
-        sentiment = "neutral"
-    }
+    console.log(result, extractLastKeyword(result));
+    // let sentiment;
+    // if (result.positive > 0.6) {
+    //     sentiment = "positive"
+    // } else if (result.negative > 0.6) {
+    //     sentiment = "negative"
+    // } else {
+    //     sentiment = "neutral"
+    // }
 
-    res.json({ sentiment: sentiment, scores: result });
+    res.json({ sentiment: extractLastKeyword(result), scores: result });
 });
 
 // Endpoint để huấn luyện
@@ -100,7 +113,7 @@ app.post('/convert', upload.single('csvFile'), (req, res) => {
         .on('data', (data) => results.push(data))
         .on('end', () => {
             // Lưu file JSON
-            const jsonFilePath = 'converted_data.json'; // Bạn có thể thay đổi tên file
+            const jsonFilePath = 'converted_data.json';
             fs.writeFileSync(jsonFilePath, JSON.stringify(results, null, 2));
 
             // Xóa file CSV tạm
@@ -116,7 +129,6 @@ app.post('/convert', upload.single('csvFile'), (req, res) => {
 });
 
 loadModel();
-// Khởi động server
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
 });

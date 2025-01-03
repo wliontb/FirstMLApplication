@@ -1,0 +1,30 @@
+# Node.js Project Setup Guide
+
+This README file provides step-by-step instructions for setting up and running a Node.js project.
+
+---
+
+## Steps to Run the Project
+
+### 1. Install Dependencies
+Install the required dependencies using npm:
+```bash
+npm install
+```
+
+### 2. Start the Server
+Start the server using Node.js:
+```bash
+node server
+```
+
+---
+
+## Author
+Created by Wliontb
+
+---
+
+## License
+This project is licensed under the [MIT License](LICENSE).
+
